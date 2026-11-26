@@ -2,7 +2,7 @@
     <record id="tender_submission_form_company" model="ir.ui.view">
         <field name="name">tender.submission.request.form.boq.company</field>
         <field name="model">tender.submission.request</field>
-        <field name="inherit_id" ref="tender_submission_request.view_tender_request_form"/>
+        <field name="inherit_id" ref="Tender_Submission_Request.view_tender_request_form"/>
         <field name="arch" type="xml">
             <field name="reference" position="after">
                 <field name="acme_submission_company_id" domain="[('id', 'in', context.get('allowed_company_ids', []))]"
@@ -20,10 +20,10 @@
                 <field name="acme_boq_submission_id"
                        domain="[('state', '=', 'won'), '|', ('acme_submission_company_id', '=', False), ('acme_submission_company_id', '=', company_id)]"
                        options="{'no_create': True}"
-                       groups="acme_project_core.group_acme_edm"
+                       groups="acme_project_core.group_acme_edm,base.group_system"
                        readonly="acme_boq_initialized or acme_lifecycle_state == 'verified'"/>
-                <div colspan="2" groups="acme_project_core.group_acme_edm"
-                     invisible="not acme_boq_submission_id or acme_boq_initialized or acme_lifecycle_state == 'verified'">
+                <div colspan="2" groups="acme_project_core.group_acme_edm,base.group_system"
+                     invisible="acme_boq_initialized or acme_lifecycle_state == 'verified' or acme_boq_ids">
                     <button name="action_acme_load_boq_submission" type="object"
                             string="Verify / Load BOQ" class="btn-secondary"/>
                 </div>
